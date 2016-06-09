@@ -23,7 +23,7 @@ public class KmlParser {
      *
      * @param fileName the file name
      */
-    public KmlParser(String fileName){
+    public KmlParser(String fileName) {
         this.file = new File(fileName);//initializing file
     }
 
@@ -33,46 +33,46 @@ public class KmlParser {
      * @return the array list
      * @throws IOException the io exception
      */
-    ArrayList< ArrayList<Point>> polygonCoord() throws IOException {
+    ArrayList<ArrayList<Point>> polygonCoord() throws IOException {
         //get and print each polygon
         ArrayList<String> list;
         ArrayList<String> outer = new ArrayList<>();
         ArrayList<String> coord = new ArrayList<>();
-        ArrayList< ArrayList<String>> res = new ArrayList<>();
-        ArrayList< ArrayList<Point>> coordinates = new ArrayList<>();
+        ArrayList<ArrayList<String>> res = new ArrayList<>();
+        ArrayList<ArrayList<Point>> coordinates = new ArrayList<>();
         String temp;
         list = getTagContent("Polygon");
 
 
-        for (int i = 0; i <list.size() ; i++) {
-            temp ="";
+        for (int i = 0; i < list.size(); i++) {
+            temp = "";
             temp = getStringTag("outerBoundaryIs", list.get(i));
-            if(temp !=""){
+            if (temp != "") {
                 outer.add(temp);
             }
         }
 
 
-        for (int i = 0; i <outer.size() ; i++) {
-            temp ="";
+        for (int i = 0; i < outer.size(); i++) {
+            temp = "";
             temp = getStringTag("coordinates", outer.get(i));
-            if(temp !=""){
+            if (temp != "") {
                 coord.add(temp);
             }
         }
 
-        for (int i = 0; i <coord.size() ; i++) {
-          res.add(toArrayList(coord.get(i)));
+        for (int i = 0; i < coord.size(); i++) {
+            res.add(toArrayList(coord.get(i)));
         }
 
 
-        for (int j = 0; j <res.size() ; j++) {
-         coordinates.add(toPointList(res.get(j)));
+        for (int j = 0; j < res.size(); j++) {
+            coordinates.add(toPointList(res.get(j)));
         }
 
 
-        for (int j = 0; j <res.size() ; j++) {
-            System.out.println(j+": "+coordinates.get(j));
+        for (int j = 0; j < res.size(); j++) {
+            System.out.println(j + ": " + coordinates.get(j));
             System.out.println("\n");
 
         }
@@ -83,7 +83,6 @@ public class KmlParser {
     }
 
 
-
     /**
      * To point list array list.
      *
@@ -91,16 +90,15 @@ public class KmlParser {
      * @return the array of strings into array of points
      * @throws IOException the io exception
      */
-    ArrayList<Point> toPointList  ( ArrayList<String> string) throws IOException {
+    ArrayList<Point> toPointList(ArrayList<String> string) throws IOException {
         ArrayList<Point> list = new ArrayList<>();
         String str;
-        for (int i = 0; i <string.size(); i++) {
+        for (int i = 0; i < string.size(); i++) {
             str = string.get(i);
-            String[] coordinates  =str.split(",");
+            String[] coordinates = str.split(",");
             list.add(new Point(Double.parseDouble(coordinates[1]), Double.parseDouble(coordinates[0])));
-            System.out.println(coordinates[1]+","+ coordinates[0]);
+            System.out.println(coordinates[1] + "," + coordinates[0]);
         }
-
 
 
         return list;
@@ -113,10 +111,10 @@ public class KmlParser {
      * @return the arraylist of strings
      * @throws IOException the io exception
      */
-    ArrayList<String> toArrayList  (String string) throws IOException {
+    ArrayList<String> toArrayList(String string) throws IOException {
         Scanner s = new Scanner(string);
         ArrayList<String> list = new ArrayList<>();
-        while (s.hasNext()){
+        while (s.hasNext()) {
             list.add(s.next());
         }
         s.close();
@@ -126,12 +124,13 @@ public class KmlParser {
 
     /**
      * Gets tag content.
-     *returns content between tags or returns empty string if tag not contained
+     * returns content between tags or returns empty string if tag not contained
+     *
      * @param tag the tag
      * @return the tag content
      * @throws IOException the io exception
      */
-    ArrayList<String> getTagContent  (String tag) throws IOException {
+    ArrayList<String> getTagContent(String tag) throws IOException {
         ArrayList<String> list = new ArrayList<>();
         String text = "";
         boolean check = false;
@@ -147,9 +146,10 @@ public class KmlParser {
                     lineFromFile = scanner.nextLine();
                     if (lineFromFile.contains("</" + tag + ">")) {
                         break;
-                    }else{
+                    } else {
 
-                    text +="\n"+lineFromFile;}
+                        text += "\n" + lineFromFile;
+                    }
                 }
                 list.add(text);
 
@@ -165,13 +165,14 @@ public class KmlParser {
 
     /**
      * Gets string tag.
-     *returns content between tags or returns empty string if tag not contained
+     * returns content between tags or returns empty string if tag not contained
+     *
      * @param tag    the tag
      * @param string the string
      * @return the string tag
      * @throws IOException the io exception
      */
-    String getStringTag  (String tag, String string) throws IOException {
+    String getStringTag(String tag, String string) throws IOException {
         String text = "";
         boolean check = false;
         String lineFromFile = "";
@@ -185,9 +186,10 @@ public class KmlParser {
                     lineFromFile = scanner.nextLine();
                     if (lineFromFile.contains("</" + tag + ">")) {
                         break;
-                    }else{
+                    } else {
 
-                    text +="\n"+lineFromFile;}
+                        text += "\n" + lineFromFile;
+                    }
                 }
                 //list.add(text);
 

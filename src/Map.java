@@ -59,7 +59,7 @@ public class Map {
      * @param list  the list
      * @throws IOException the io exception
      */
-    public Map(Point start, Point end, int size,  ArrayList< ArrayList<Point>> list) throws IOException {
+    public Map(Point start, Point end, int size, ArrayList<ArrayList<Point>> list) throws IOException {
         this.start = start;
         this.end = end;
         this.size = size;
@@ -73,23 +73,23 @@ public class Map {
             checkForPoly(list.get(k));
 
 
-            }
+        }
 
 
     }
 
     private void checkForPoly(ArrayList<Point> list) {
         PointChecker checker = new PointChecker();
-            for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
 
-                for (int j = 0; j < size; j++) {
+            for (int j = 0; j < size; j++) {
 
-                    if(checker.isInside(list, nodes[j][i].point) == true){
-                        nodes[j][i].walkable = false;
-                    }
-
+                if (checker.isInside(list, nodes[j][i].point) == true) {
+                    nodes[j][i].walkable = false;
                 }
+
             }
+        }
 
     }
 
@@ -99,8 +99,8 @@ public class Map {
     private void initNodes() throws IOException {
         double lat = start.latitude;
         double lng = start.longitude;
-        double xDistance = (end.longitude - start.longitude) /  size;
-        double yDistance = (start.latitude - end.latitude) /size;
+        double xDistance = (end.longitude - start.longitude) / size;
+        double yDistance = (start.latitude - end.latitude) / size;
         double x, y;
         int flag;
         boolean walkable = true;
@@ -109,23 +109,23 @@ public class Map {
         for (int i = 0; i < size; i++) {
             x = lng;
 
-            for (int j = 0; j <size ; j++) {
+            for (int j = 0; j < size; j++) {
                 //populate array
-                flag = checker.execute(y,x);
-                if(flag == 0){
+                flag = checker.execute(y, x);
+                if (flag == 0) {
                     walkable = true;
-                }else{
+                } else {
                     walkable = false;
                 }
-                nodes[j][i] = new Node(new Point(y, x), walkable,getDistance(start, new Point(y, x)),getDistance(new Point(y, x),end ));
-                        System.out.println(flag +" | " + y + ", " + x);
+                nodes[j][i] = new Node(new Point(y, x), walkable, getDistance(start, new Point(y, x)), getDistance(new Point(y, x), end));
+                System.out.println(flag + " | " + y + ", " + x);
                 x = x + xDistance;
-                }
-            y = y - yDistance;
             }
-
-
+            y = y - yDistance;
         }
+
+
+    }
 
 
     /**
@@ -146,7 +146,7 @@ public class Map {
         while (true) { //loop start
 
 
-            if((nodes[j][i].point == nodes[size - 1][size - 1].point) ||(i == size - 1 && j == size -1)){ //exit if current is destination
+            if ((nodes[j][i].point == nodes[size - 1][size - 1].point) || (i == size - 1 && j == size - 1)) { //exit if current is destination
                 nodes[j][i].walkable = false; //set walkable to false
                 break; //exit loop
             }
@@ -154,14 +154,14 @@ public class Map {
 
             //If i can't get past the first node
             if ((
-                    ((i <= 0 || j <= 0 )|| nodes[j - 1][i - 1].walkable != true   )&& //if top left
-                            ((i <= 0 || j >= size - 1 ) || nodes[j + 1][i - 1].walkable != true ) && //top right
-                            (i <= 0 || nodes[j][i - 1].walkable != true ) && //if top of row
-                            (j <= 0  || nodes[j - 1][i].walkable != true) && //if left of col
-                            (j >= size -1 || nodes[j + 1][i].walkable != true) && //right of col
-                            ((i >= size -1 || j <= 0 ) || nodes[j - 1][i + 1].walkable != true) && //if bottom left
-                            ((i >= size -1 || j >= size -1 ) || nodes[j + 1][i + 1].walkable != true) && //if bottom right
-                            ( i >= size -1 || nodes[j][i + 1].walkable != true) && nodes[j][i].parent == null )) { //if no more neighbors to explore, go back to parent or break
+                    ((i <= 0 || j <= 0) || nodes[j - 1][i - 1].walkable != true) && //if top left
+                            ((i <= 0 || j >= size - 1) || nodes[j + 1][i - 1].walkable != true) && //top right
+                            (i <= 0 || nodes[j][i - 1].walkable != true) && //if top of row
+                            (j <= 0 || nodes[j - 1][i].walkable != true) && //if left of col
+                            (j >= size - 1 || nodes[j + 1][i].walkable != true) && //right of col
+                            ((i >= size - 1 || j <= 0) || nodes[j - 1][i + 1].walkable != true) && //if bottom left
+                            ((i >= size - 1 || j >= size - 1) || nodes[j + 1][i + 1].walkable != true) && //if bottom right
+                            (i >= size - 1 || nodes[j][i + 1].walkable != true) && nodes[j][i].parent == null)) { //if no more neighbors to explore, go back to parent or break
 
                 return null;
 
@@ -170,27 +170,27 @@ public class Map {
 
             //if neighbors of the node are NOT available
             if (
-                    ((i <= 0 || j <= 0 )|| nodes[j - 1][i - 1].walkable != true   )&& //if top left
-                            ((i <= 0 || j >= size - 1 ) || nodes[j + 1][i - 1].walkable != true ) && //top right
-                            (i <= 0 || nodes[j][i - 1].walkable != true ) && //if top of row
-                            (j <= 0  || nodes[j - 1][i].walkable != true) && //if left of col
-                            (j >= size -1 || nodes[j + 1][i].walkable != true) && //right of col
-                            ((i >= size -1 || j <= 0 ) || nodes[j - 1][i + 1].walkable != true) && //if bottom left
-                            ((i >= size -1 || j >= size -1 ) || nodes[j + 1][i + 1].walkable != true) && //if bottom right
-                            ( i >= size -1 || nodes[j][i + 1].walkable != true)) { //if no more neighbors to explore, go back to parent or break
+                    ((i <= 0 || j <= 0) || nodes[j - 1][i - 1].walkable != true) && //if top left
+                            ((i <= 0 || j >= size - 1) || nodes[j + 1][i - 1].walkable != true) && //top right
+                            (i <= 0 || nodes[j][i - 1].walkable != true) && //if top of row
+                            (j <= 0 || nodes[j - 1][i].walkable != true) && //if left of col
+                            (j >= size - 1 || nodes[j + 1][i].walkable != true) && //right of col
+                            ((i >= size - 1 || j <= 0) || nodes[j - 1][i + 1].walkable != true) && //if bottom left
+                            ((i >= size - 1 || j >= size - 1) || nodes[j + 1][i + 1].walkable != true) && //if bottom right
+                            (i >= size - 1 || nodes[j][i + 1].walkable != true)) { //if no more neighbors to explore, go back to parent or break
 
                 //set current to unwalkable
                 nodes[j][i].walkable = false;
                 //set current to the parent
-                j= oj;
+                j = oj;
                 i = oi;
                 //set child to 0, 0
                 lj = 0;
                 li = 0;
-            }else {//if we have options, if some ARE available
+            } else {//if we have options, if some ARE available
                 //from here we compare each node's h distance and set the lowest to next
 
-                if(!(i <= 0 || j <= 0 )) {
+                if (!(i <= 0 || j <= 0)) {
                     //top left
                     if (nodes[j - 1][i - 1].walkable == true) {
                         lj = j - 1;
@@ -198,7 +198,7 @@ public class Map {
                     }
                 }
 
-                if(!(i <= 0 || j >= size - 1 )) {
+                if (!(i <= 0 || j >= size - 1)) {
                     if (nodes[j + 1][i - 1].walkable == true) { //top right
                         if (nodes[lj][li].h > nodes[j + 1][i - 1].h) {
                             lj = j + 1;
@@ -207,7 +207,7 @@ public class Map {
                     }
                 }
 
-                if(!(i <= 0)) {
+                if (!(i <= 0)) {
                     if (nodes[j][i - 1].walkable == true) {
                         if (nodes[lj][li].h > nodes[j][i - 1].h) {
                             lj = j;
@@ -216,7 +216,7 @@ public class Map {
                     }
                 }
 
-                if(!(j <= 0)) {
+                if (!(j <= 0)) {
                     if (nodes[j - 1][i].walkable == true) {
                         if (nodes[lj][li].h > nodes[j - 1][i].h) {
                             lj = j - 1;
@@ -225,7 +225,7 @@ public class Map {
                     }
                 }
 
-                if(!(j >= size -1)) {
+                if (!(j >= size - 1)) {
                     if (nodes[j + 1][i].walkable == true) {
                         if (nodes[lj][li].h > nodes[j + 1][i].h) {
                             lj = j + 1;
@@ -234,7 +234,7 @@ public class Map {
                     }
                 }
 
-                if(!(i >= size -1 || j <= 0 )) {
+                if (!(i >= size - 1 || j <= 0)) {
                     if (nodes[j - 1][i + 1].walkable == true) {
                         if (nodes[lj][li].h > nodes[j - 1][i + 1].h) {
                             lj = j - 1;
@@ -243,7 +243,7 @@ public class Map {
                     }
                 }
 
-                if(!(i >= size -1 || j >= size -1 )) {
+                if (!(i >= size - 1 || j >= size - 1)) {
                     if (nodes[j + 1][i + 1].walkable == true) {
                         if (nodes[lj][li].h > nodes[j + 1][i + 1].h) {
                             lj = j + 1;
@@ -252,7 +252,7 @@ public class Map {
                     }
                 }
 
-                if(!(i >= size -1)) {
+                if (!(i >= size - 1)) {
                     if (nodes[j][i + 1].walkable == true) {
                         if (nodes[lj][li].h > nodes[j][i + 1].h) {
                             lj = j;
@@ -263,60 +263,58 @@ public class Map {
 
 
                 //prioritize left over top
-                if(!(i <= 0)) { //if can go up
-                    if(!(j <= 0)) { //if can go left
-                        if(i - 1 == li && j == lj){ //if next is top
+                if (!(i <= 0)) { //if can go up
+                    if (!(j <= 0)) { //if can go left
+                        if (i - 1 == li && j == lj) { //if next is top
                             if (nodes[j - 1][i].walkable == true) { //if left is walkable
                                 //set next to left
-                                    lj = j - 1;
-                                    li = i;
-                                }
+                                lj = j - 1;
+                                li = i;
+                            }
                         }
                     }
 
                 }
                 //prioritize left over top right
-                if(!(i <= 0 || j >= size - 1 )){//if can go up right
-                    if(!(j <= 0)) { //if can go left
-                        if(i - 1 == li && j + 1 == lj){ //if next is top
+                if (!(i <= 0 || j >= size - 1)) {//if can go up right
+                    if (!(j <= 0)) { //if can go left
+                        if (i - 1 == li && j + 1 == lj) { //if next is top
                             if (nodes[j - 1][i].walkable == true) { //if left is walkable
                                 //set next to left
-                                    lj = j - 1;
-                                    li = i;
-                                }
+                                lj = j - 1;
+                                li = i;
+                            }
                         }
                     }
 
                 }
 
 
-
-
             }
 
-                //set current node to un-walkable
-                nodes[j][i].walkable  = false;
-                //set current as parent of next node
-                nodes[lj][li].parent = nodes[j][i];
-               // set current nodes to old nodes
-                    oj = j;
-                    oi = i;
-                //set next node as current
-                j = lj;
-                i = li;
-            if(lj == oj && li == oi){
+            //set current node to un-walkable
+            nodes[j][i].walkable = false;
+            //set current as parent of next node
+            nodes[lj][li].parent = nodes[j][i];
+            // set current nodes to old nodes
+            oj = j;
+            oi = i;
+            //set next node as current
+            j = lj;
+            i = li;
+            if (lj == oj && li == oi) {
                 return null;
             }
 
-                lj = 0;
-                li = 0;
+            lj = 0;
+            li = 0;
 
             drawMap(); //draw map
-           System.out.println();
-            } //end loop
+            System.out.println();
+        } //end loop
 
-            return nodetoList(nodes[j][i]); //return path
-        }
+        return nodetoList(nodes[j][i]); //return path
+    }
 
 
     /**
@@ -325,16 +323,16 @@ public class Map {
      * @param n the n
      * @return the array list
      */
-    ArrayList<Node> nodetoList(Node n){
+    ArrayList<Node> nodetoList(Node n) {
         ArrayList<Node> path = new ArrayList<>();
 
         path.add(new Node(end));
-         path.add(n);
+        path.add(n);
         while (n.parent != null) {
             path.add(n);
             n = n.parent;
         }
-         path.add(n);
+        path.add(n);
         return path;
     }
 
@@ -346,10 +344,10 @@ public class Map {
     public void drawMap() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if(nodes[j][i].walkable)
-                    print( "0\t");
+                if (nodes[j][i].walkable)
+                    print("0\t");
                 else
-                    print( "#\t");
+                    print("#\t");
             }
             print("\n");
         }
@@ -399,17 +397,17 @@ public class Map {
      * @param two the two
      * @return the double
      */
-    public Double  getDistance(Point one, Point two){
+    public Double getDistance(Point one, Point two) {
         double R = 6371000; // metres
-        double lat1 = (one.latitude*Math.PI)/180; // convert to toRadians
-        double lat2 = (two.latitude*Math.PI)/180; // convert to toRadians
-        double latDiff = ((two.latitude-one.latitude)*Math.PI)/180; // convert to toRadians
-        double longDiff = ((two.longitude-one.longitude)*Math.PI)/180; // convert to toRadians
+        double lat1 = (one.latitude * Math.PI) / 180; // convert to toRadians
+        double lat2 = (two.latitude * Math.PI) / 180; // convert to toRadians
+        double latDiff = ((two.latitude - one.latitude) * Math.PI) / 180; // convert to toRadians
+        double longDiff = ((two.longitude - one.longitude) * Math.PI) / 180; // convert to toRadians
 
-        double a = Math.sin(latDiff/2) * Math.sin(latDiff/2) +
+        double a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
                 Math.cos(lat1) * Math.cos(lat2) *
-                        Math.sin(longDiff/2) * Math.sin(longDiff/2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                        Math.sin(longDiff / 2) * Math.sin(longDiff / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         double d = R * c;
         return d;

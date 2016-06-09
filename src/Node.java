@@ -62,15 +62,15 @@ public class Node {
     public Node(Point point, boolean walkable, double g, double h) {
         this.point = point;
         this.point = point;
-       this.walkable =  walkable;
-       this.g = g; //calculated costs from start Node to this Node.
-       this.h = h;//estimated costs to get from this Node to end Node.
+        this.walkable = walkable;
+        this.g = g; //calculated costs from start Node to this Node.
+        this.h = h;//estimated costs to get from this Node to end Node.
     }
 
     /**
      * constructs a walkable Node with given coordinates.
      *
-     * @param point    the point
+     * @param point the point
      */
     public Node(Point point) {
         this.point = point;
@@ -82,7 +82,7 @@ public class Node {
      *
      * @param n the n
      */
-    void setNeighbors(ArrayList<Node> n){
+    void setNeighbors(ArrayList<Node> n) {
         neighbors = n;
     }
 
@@ -91,7 +91,7 @@ public class Node {
      *
      * @param p the p
      */
-    void setParent(Node p){
+    void setParent(Node p) {
         parent = p;
     }
 
@@ -100,26 +100,24 @@ public class Node {
      *
      * @return the array list
      */
-    ArrayList<Node> sortNodes(){
+    ArrayList<Node> sortNodes() {
         ArrayList<Node> temp = new ArrayList<>();
         ArrayList<Double> dis = new ArrayList<>();
-        for (int i = 0; i <neighbors.size(); i++) {
+        for (int i = 0; i < neighbors.size(); i++) {
             dis.add(neighbors.get(i).h);
         }
 
         Collections.sort(dis);
 
-        for (int i = 0; i <dis.size() ; i++) {
-            for (int j = 0; j <neighbors.size() ; j++) {
-                if(neighbors.get(j).h == dis.get(i)){
+        for (int i = 0; i < dis.size(); i++) {
+            for (int j = 0; j < neighbors.size(); j++) {
+                if (neighbors.get(j).h == dis.get(i)) {
                     temp.add(i, neighbors.get(j));
                 }
             }
         }
         return temp;
     }
-
-
 
 
 }
