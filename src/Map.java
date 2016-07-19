@@ -59,6 +59,7 @@ public class Map {
      * @param list  the list
      * @throws IOException the io exception
      */
+     //TODO: the ability to set any point as start and end
     public Map(Point start, Point end, int size, ArrayList<ArrayList<Point>> list) throws IOException {
         this.start = start;
         this.end = end;
@@ -133,6 +134,7 @@ public class Map {
      *
      * @return the array list
      */
+     //TODO: There are still cases where if there is not path, the loop doesn't exit 
     public ArrayList<Node> findPath() {
         System.out.println("Path finding!");
         nodes[0][0].parent = null;
