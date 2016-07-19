@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
+    <!--This file is a kml containing a polygon used for a test case.-->
     <Placemark>
         <name>The Pentagon</name>
         <Polygon>
