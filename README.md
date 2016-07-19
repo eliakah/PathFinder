@@ -47,12 +47,10 @@ execute(lat, lng)
 			(a)This module runs a PHP script that checks google maps’ pixels at a certain coordinate. 
 
 isInside(polygon, point)
-
-This module checks if the point is inside the polygon, then returns true/false. 
+	This module checks if the point is inside the polygon, then returns true/false. 
 
 Index.php
-
-This script takes a latitude and longitude parameter which allows it to check for a pixel color a that coordinate. It then returns a 1 if the pixel is black and 0 if it is white. This script along with the pointchecker module is in the htdocs in the xampp folder. It runs as if it were on a server. 
+	This script takes a latitude and longitude parameter which allows it to check for a pixel color a that coordinate. It then returns a 1 if the pixel is black and 0 if it is white. This script along with the pointchecker module is in the htdocs in the xampp folder. It runs as if it were on a server. 
 
 (vi)Class KMLParser(fileName)
       
