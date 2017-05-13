@@ -3,6 +3,7 @@
  * Map.
  * This class contains the graph where the main algorithm is ran,
  * it returns the list of Nodes making up the path
+ TODO: Improve path finding algorithm, add better error handling
  */
 
 import java.io.IOException;
