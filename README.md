@@ -1,4 +1,4 @@
-<h1>PathFinder<h1>
+<h1>PathFinder</h1>
 
 ABOUT INDEX.PHP:
 
