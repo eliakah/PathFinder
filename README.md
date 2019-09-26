@@ -1,5 +1,6 @@
 <h1>PathFinder</h1>
-ABOUT INDEX.PHP:
+
+About index.php:
 
 This project uses the index.php script in order to check if a point is on land or water. This Script is called by the Pointcheker Class. 
 While testing, I made sure that the index.php file was inside of my htdocs folder in Xamp in order for it to run. Making sure that that file can be executed properly is all that is needed for this program to run properly. 
